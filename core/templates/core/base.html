@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Jeffeson Brito - Portfolio{% endblock %}</title>
+    <link rel="stylesheet" href=" {% static "css/style.css" %}">
+    
+
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <ul class="nav-links">
+                <li><a href="{% url 'core:index' %}" {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}>BIOGRAFIA</a></li>
+                <li><a href="#portfolio">PORTFOLIO</a></li>
+                <li><a href="{% url 'contato:contato' %}" {% if request.resolver_match.url_name == 'contato' %}class="active"{% endif %}>CONTATO</a></li>
+                <li><a href="#blog">BLOG</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

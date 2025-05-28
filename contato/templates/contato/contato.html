@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Contato - Jeffeson Brito{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="contact-info">
+        <h2>Contato</h2>
+        
+        <h3>Entre em contato</h3>
+        
+        <div class="contact-details">
+            <p><strong>Email:</strong> jeffeson@exemplo.com</p>
+            <p><strong>Telefone:</strong> (11) 99999-9999</p>
+            <p><strong>LinkedIn:</strong> @jeffesonbrito</p>
+            <p><strong>GitHub:</strong> @J3ff3son</p>
+        </div>
+    </div>
+    
+    <div class="contact-form">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" style="padding: 15px; margin-bottom: 20px; border: 2px solid {% if message.tags == 'success' %}#4CAF50{% else %}#f44336{% endif %}; background-color: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %}; color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %};">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.nome.id_for_label }}">Nome</label>
+                {{ form.nome }}
+                {% if form.nome.errors %}
+                    <div class="error-message" style="color: #f44336; font-size: 0.9rem; margin-top: 5px;">
+                        {{ form.nome.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="error-message" style="color: #f44336; font-size: 0.9rem; margin-top: 5px;">
+                        {{ form.email.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.assunto.id_for_label }}">Assunto</label>
+                {{ form.assunto }}
+                {% if form.assunto.errors %}
+                    <div class="error-message" style="color: #f44336; font-size: 0.9rem; margin-top: 5px;">
+                        {{ form.assunto.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.mensagem.id_for_label }}">Mensagem</label>
+                {{ form.mensagem }}
+                {% if form.mensagem.errors %}
+                    <div class="error-message" style="color: #f44336; font-size: 0.9rem; margin-top: 5px;">
+                        {{ form.mensagem.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn-submit">Enviar Mensagem</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
