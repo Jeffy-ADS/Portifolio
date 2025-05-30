@@ -312,3 +312,21 @@ body {
         height: 20px;
     }
 }
+
+/* static/css/style.css */
+.contact-image {
+    margin: 20px 0;
+    text-align: center; /* Centraliza a imagem */
+}
+
+.modern-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.3s ease; /* Animação ao passar o mouse */
+}
+
+.modern-image:hover {
+    transform: scale(1.05); /* Leve zoom ao passar o mouse */
+}

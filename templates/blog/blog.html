@@ -1,0 +1,365 @@
+<!--templates/blog.html-->
+<!--# Precisa criar e configurar o app blog -->
+{% extends 'base.html' %}
+
+{% block title %}Blog - Jeffeson Brito{% endblock %}
+
+{% block extra_css %}
+<style>
+    .blog-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .blog-title {
+        font-size: 3.5rem;
+        font-weight: 300;
+        color: #2c2c2c;
+        margin-bottom: 20px;
+        line-height: 1.1;
+    }
+
+    .blog-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+        font-weight: 400;
+    }
+
+    .blog-posts {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .blog-post {
+        display: flex;
+        gap: 30px;
+        padding: 30px;
+        background-color: #f5f0eb;
+        border: 2px solid #d4c4b0;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .blog-post:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .post-image {
+        width: 200px;
+        height: 150px;
+        border-radius: 8px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .post-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .post-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .post-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #2c2c2c;
+        margin-bottom: 15px;
+        line-height: 1.3;
+    }
+
+    .post-excerpt {
+        color: #666;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .post-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+    }
+
+    .post-date {
+        color: #999;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .read-more {
+        color: #2c2c2c;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 8px 20px;
+        border: 2px solid #2c2c2c;
+        transition: all 0.3s ease;
+    }
+
+    .read-more:hover {
+        background-color: #2c2c2c;
+        color: white;
+    }
+
+    .no-posts {
+        text-align: center;
+        padding: 80px 0;
+        color: #666;
+        font-size: 1.2rem;
+    }
+
+    .pagination {
+        margin-top: 60px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .pagination a,
+    .pagination span {
+        padding: 12px 20px;
+        border: 2px solid #d4c4b0;
+        background-color: #f5f0eb;
+        color: #2c2c2c;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .pagination a:hover {
+        background-color: #2c2c2c;
+        color: white;
+        border-color: #2c2c2c;
+    }
+
+    .pagination .current {
+        background-color: #2c2c2c;
+        color: white;
+        border-color: #2c2c2c;
+    }
+
+    .pagination .disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Categorias e Tags */
+    .blog-filters {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .filter-tags {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    .filter-tag {
+        padding: 8px 16px;
+        background-color: #f5f0eb;
+        border: 2px solid #d4c4b0;
+        color: #2c2c2c;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .filter-tag:hover,
+    .filter-tag.active {
+        background-color: #2c2c2c;
+        color: white;
+        border-color: #2c2c2c;
+    }
+
+    .post-tags {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+    .post-tag {
+        padding: 4px 12px;
+        background-color: #d4c4b0;
+        color: #2c2c2c;
+        font-size: 0.8rem;
+        font-weight: 500;
+        border-radius: 20px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 1024px) {
+        .blog-post {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 200px;
+        }
+
+        .blog-title {
+            font-size: 2.8rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .blog-title {
+            font-size: 2.2rem;
+        }
+
+        .post-title {
+            font-size: 1.4rem;
+        }
+
+        .filter-tags {
+            gap: 10px;
+        }
+
+        .pagination {
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="blog-header">
+    <h1 class="blog-title">Blog</h1>
+    <p class="blog-subtitle">Compartilhando conhecimento sobre desenvolvimento e tecnologia</p>
+</div>
+
+<!-- Filtros de categoria -->
+<div class="blog-filters">
+    <div class="filter-tags">
+        <a href="#" class="filter-tag active">Todos</a>
+        <a href="#" class="filter-tag">Programação</a>
+        <a href="#" class="filter-tag">Web Development</a>
+        <a href="#" class="filter-tag">UX/UI</a>
+        <a href="#" class="filter-tag">Tecnologia</a>
+    </div>
+</div>
+
+<div class="blog-posts">
+    <!-- Post 1 -->
+    <article class="blog-post">
+        <div class="post-image">
+            <img src="https://via.placeholder.com/200x150/2c2c2c/ffffff?text=Code" alt="Como iniciar na programação em 2024">
+        </div>
+        <div class="post-content">
+            <h2 class="post-title">Como iniciar na programação em 2024</h2>
+            <p class="post-excerpt">Dicas essenciais para quem está começando na área de desenvolvimento. Linguagens, recursos e roadmap para iniciantes.</p>
+            <div class="post-tags">
+                <span class="post-tag">Programação</span>
+                <span class="post-tag">Iniciantes</span>
+            </div>
+            <div class="post-meta">
+                <span class="post-date">15 de janeiro, 2024</span>
+                <a href="#" class="read-more">Ler Mais</a>
+            </div>
+        </div>
+    </article>
+
+    <!-- Post 2 -->
+    <article class="blog-post">
+        <div class="post-image">
+            <img src="https://via.placeholder.com/200x150/666666/ffffff?text=Web" alt="Tendências em desenvolvimento web">
+        </div>
+        <div class="post-content">
+            <h2 class="post-title">Tendências em desenvolvimento web</h2>
+            <p class="post-excerpt">As principais tecnologias e frameworks que estão dominando o mercado. O que você precisa saber para se manter atualizado.</p>
+            <div class="post-tags">
+                <span class="post-tag">Web Development</span>
+                <span class="post-tag">Trends</span>
+            </div>
+            <div class="post-meta">
+                <span class="post-date">10 de janeiro, 2024</span>
+                <a href="#" class="read-more">Ler Mais</a>
+            </div>
+        </div>
+    </article>
+
+    <!-- Post 3 -->
+    <article class="blog-post">
+        <div class="post-image">
+            <img src="https://via.placeholder.com/200x150/d4c4b0/2c2c2c?text=UX" alt="Importância da experiência do usuário">
+        </div>
+        <div class="post-content">
+            <h2 class="post-title">Importância da experiência do usuário</h2>
+            <p class="post-excerpt">Como criar interfaces que realmente conectam com o usuário. Princípios fundamentais de UX e UI design.</p>
+            <div class="post-tags">
+                <span class="post-tag">UX/UI</span>
+                <span class="post-tag">Design</span>
+            </div>
+            <div class="post-meta">
+                <span class="post-date">5 de janeiro, 2024</span>
+                <a href="#" class="read-more">Ler Mais</a>
+            </div>
+        </div>
+    </article>
+</div>
+
+<!-- Paginação -->
+<div class="pagination">
+    <a href="#" class="disabled">Anterior</a>
+    <span class="current">1</span>
+    <a href="#">2</a>
+    <a href="#">3</a>
+    <a href="#">Próximo</a>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Script para filtros de categoria
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterTags = document.querySelectorAll('.filter-tag');
+        const blogPosts = document.querySelectorAll('.blog-post');
+
+        filterTags.forEach(tag => {
+            tag.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tags
+                filterTags.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tag
+                this.classList.add('active');
+                
+                // Filter logic would go here
+                // For now, just show all posts
+                blogPosts.forEach(post => {
+                    post.style.display = 'flex';
+                });
+            });
+        });
+
+        // Hover effect for blog posts
+        blogPosts.forEach(post => {
+            post.addEventListener('click', function() {
+                const readMoreLink = this.querySelector('.read-more');
+                if (readMoreLink) {
+                    window.location.href = readMoreLink.href;
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

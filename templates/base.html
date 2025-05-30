@@ -1,3 +1,4 @@
+<!--templates/base.html-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -316,12 +317,16 @@
 <body>
     <header class="header">
         <nav class="nav">
+            <header class="header">
+        <nav class="nav">
             <ul class="nav-links">
-                <li><a href="{% url 'core:index' %}" {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}>BIOGRAFIA</a></li>
+                <li><a href="#biografia">BIOGRAFIA</a></li>
                 <li><a href="#portfolio">PORTFOLIO</a></li>
-                <li><a href="{% url 'contato:contato' %}" {% if request.resolver_match.url_name == 'contato' %}class="active"{% endif %}>CONTATO</a></li>
+                <li><a href="{% url 'contato:contato' %}">CONTATO</a></li>
                 <li><a href="#blog">BLOG</a></li>
             </ul>
+        </nav>
+    </header>
         </nav>
     </header>
 
